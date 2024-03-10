@@ -6,18 +6,23 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 
 @Configuration
-public class AudibleeventserverConfiguration {
+public class AudibleEventServerConfiguration {
 
     @Value("${udp.audio.rx.port}")
     private int receivePort;
 
     @Value("${udp.events.files}")
     private String eventFilesPath;
+
+    @Value("${udp.remote.host}")
+    private String remoteHost;
+
+    @Value("${udp.remote.tx.port}")
+    private int remotePort;
 
 
     /**
@@ -32,8 +37,8 @@ public class AudibleeventserverConfiguration {
     @Bean
     public UdpListenerService udpListenerService() {
         return new UdpListenerService(
-                audioEventQueue(),
-                receivePort
+            audioEventQueue(),
+            receivePort
         );
     }
 
@@ -54,6 +59,7 @@ public class AudibleeventserverConfiguration {
 
     @Bean
     public UdpSenderService udpSenderService() {
-        return new UdpSenderService();
+        return new UdpSenderService(remoteHost, remotePort);
     }
+
 }

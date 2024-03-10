@@ -39,11 +39,9 @@ public class TaskRunner {
                     logger.info(f.get());  // just hangs until something happens
                 }
             }
-        } catch (InterruptedException e) {
+        } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
-        } catch (ExecutionException e) {
-            throw new RuntimeException(e);
-        }finally {
+        } finally {
             executorService.shutdown();
         }
     }

@@ -45,7 +45,7 @@ public class QueueManager implements Callable<String> {
                     }
                     logger.info("Event size is {}", event.getSampleCount());
                 }
-                Thread.sleep(10);
+                Thread.yield();
             }
         } catch (Exception e) {
             logger.error("QueueManager run() encountered an error: {}, shutting down!", e.getMessage());

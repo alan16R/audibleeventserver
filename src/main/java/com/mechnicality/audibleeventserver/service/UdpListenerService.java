@@ -33,12 +33,11 @@ public class UdpListenerService implements Callable<String> {
     public void init() {
         try {
             socket = new DatagramSocket(receivePort);
-
         } catch (Exception e) {
             logger.error("Failed to create socket at {} with error {}", receivePort, e.getMessage());
             throw new RuntimeException(e);
         }
-        logger.info("Started UdpListenerService");
+        logger.info("Started UdpListenerService listening on UDP socket at with {}", receivePort);
     }
 
     public void stop() {
@@ -56,7 +55,6 @@ public class UdpListenerService implements Callable<String> {
                     socket.receive(packet);
                 } catch (IOException e) {
                     logger.error("Socket receive failed! {} ", e.getMessage());
-
                     throw new RuntimeException(e);
                 }
 

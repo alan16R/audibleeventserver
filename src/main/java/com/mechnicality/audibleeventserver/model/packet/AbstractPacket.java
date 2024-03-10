@@ -1,7 +1,6 @@
 package com.mechnicality.audibleeventserver.model.packet;
 
 import com.mechnicality.audibleeventserver.model.PacketType;
-import com.mechnicality.audibleeventserver.model.transformer.BytesConvertor;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -11,9 +10,9 @@ public abstract class AbstractPacket<T> implements Packet<T> {
 
     public static final int HEADER_BYTES = 12;
     public static final int COMMAND_OFFSET = 0;
-    public static final int COUNT_OFFSET = 4;
+    public static final int COUNT_OFFSET = 8;
 
-    public static final int SEQUENCE_OFFSET = 8;
+    public static final int SEQUENCE_OFFSET = 4;
     public static final int COMMAND_MASK = 0xf;
 
 

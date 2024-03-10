@@ -3,8 +3,11 @@ package com.mechnicality.audibleeventserver.model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.time.Instant;
 
+import static java.net.InetAddress.getByName;
 import static org.junit.jupiter.api.Assertions.*;
 
 class InfoTest {
@@ -16,7 +19,11 @@ class InfoTest {
     @Test
     void newInfoTest() {
         Info uut = new InfoBuilder().with( $-> {
-            $.sender = IpAddress.of("192.168.143.109");
+            try {
+                $.sender =  getByName("192.168.143.109");
+            } catch (UnknownHostException e) {
+                throw new RuntimeException(e);
+            }
             $.connected = true;
             $.enabled = false;
             $.onThreshold = 1233;

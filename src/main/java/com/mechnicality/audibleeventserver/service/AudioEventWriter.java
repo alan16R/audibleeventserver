@@ -58,7 +58,7 @@ public class AudioEventWriter {
         try {
             String json = objectMapper.writeValueAsString(event);
             Files.writeString(eventPath, json, StandardOpenOption.CREATE);
-            logger.info("Saved event to: {}", eventPath.getFileName());
+            logger.info("Saved {} to: {}", event, eventPath.getFileName());
         } catch (IOException e) {
             logger.warn("Failed to write event with sample time of: {} - {}", event.getTimestamp(),e.getMessage());
         }

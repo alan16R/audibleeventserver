@@ -1,10 +1,11 @@
 package com.mechnicality.audibleeventserver.model;
 
+import java.net.InetAddress;
 import java.time.Instant;
 import java.util.function.Consumer;
 
 public class InfoBuilder {
-    public  IpAddress sender;
+    public InetAddress sender;
     public  boolean connected;
     public  boolean enabled;
     public  short onThreshold;

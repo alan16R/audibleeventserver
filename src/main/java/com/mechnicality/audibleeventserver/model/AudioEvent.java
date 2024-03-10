@@ -23,6 +23,10 @@ public class AudioEvent {
     @JsonIgnore
     private boolean finishFound;
 
+    private short max;
+
+    private short min;
+
     // 8 bytes
     private Instant timestamp;
     // 4 bytes
@@ -34,6 +38,8 @@ public class AudioEvent {
         this.empty = true;
         this.samples = new ArrayList<>();
         this.finishFound = false;
+        this.max = Short.MIN_VALUE;
+        this.min = Short.MAX_VALUE;
     }
 
 
@@ -56,18 +62,25 @@ public class AudioEvent {
             samples.addAll(audioPacket.getValue());
 //        }
         this.sampleCount  += packetSamples; // number of SAMPLES
+        this.min = audioPacket.getMin() < min ? audioPacket.getMin(): this.min;
+        this.max = audioPacket.getMax() > max ? audioPacket.getMax(): this.max;
         return this;
     }
 
 
     @Override
     public String toString() {
-        return "AudioEvent:[ @" + timestamp + ", sampleCount=" + sampleCount + " ]";
+        return "AudioEvent{" +
+                "max=" + max +
+                ", min=" + min +
+                ", timestamp=" + timestamp +
+                ", sampleCount=" + sampleCount +
+                '}';
     }
 
     @JsonIgnore
     public boolean isFinished() {
-        boolean limitExceeded = this.sampleCount >= 32000;
+        boolean limitExceeded = this.sampleCount >= (256 * 128);
         return this.finishFound || limitExceeded;
     }
 

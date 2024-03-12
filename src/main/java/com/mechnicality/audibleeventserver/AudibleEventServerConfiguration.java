@@ -54,7 +54,7 @@ public class AudibleEventServerConfiguration {
 
     @Bean
     public TaskRunner taskRunner() {
-        return new TaskRunner(queueManager(), udpListenerService());
+        return new TaskRunner(queueManager(), udpListenerService(), udpSenderService());
     }
 
     @Bean

@@ -15,7 +15,9 @@ public enum PacketType {
     GetInfo(4),
     Info(5),
     // special packet used to tell the remote host that we are ready.
-    Id(6);
+    Wakeup(6), Command(7);
+
+
 
     private final int code;
 

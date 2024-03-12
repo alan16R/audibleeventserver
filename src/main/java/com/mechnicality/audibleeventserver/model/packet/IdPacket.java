@@ -7,7 +7,7 @@ public class IdPacket implements TxPacket {
 
     @Override
     public PacketType getType() {
-        return PacketType.Id;
+        return PacketType.Wakeup;
     }
 
     @Override

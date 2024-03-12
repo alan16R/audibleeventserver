@@ -1,6 +1,9 @@
 package com.mechnicality.audibleeventserver;
 
+import com.mechnicality.audibleeventserver.model.PacketType;
+import com.mechnicality.audibleeventserver.model.packet.ControlPacket;
 import com.mechnicality.audibleeventserver.service.TaskRunner;
+import com.mechnicality.audibleeventserver.service.UdpSenderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +18,8 @@ public class AudibleEventServerApplication  implements ApplicationRunner
  {
      @Autowired
      private TaskRunner taskRunner;
-
+     @Autowired
+     private UdpSenderService udpSenderService;
 
     private static final Logger logger = LoggerFactory.getLogger(AudibleEventServerApplication.class);
 
@@ -28,7 +32,11 @@ public class AudibleEventServerApplication  implements ApplicationRunner
 
      @Override
      public void run(ApplicationArguments args) throws Exception {
-         System.out.println("Got here");
+         logger.info("Sending wakeup packet to module.");
+         udpSenderService.sendPacket(ControlPacket.of(b -> b
+                 .type(PacketType.Wakeup)  // wakeup packets get no acknowlegement.
+         ));
          taskRunner.onStartup();
+
      }
  }

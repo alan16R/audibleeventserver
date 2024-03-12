@@ -15,7 +15,7 @@ class ControlPacketTest {
     void setUp() {
         uut = ControlPacket.of(b ->
                 b
-                        .type(PacketType.Id)
+                        .type(PacketType.Wakeup)
                         .integer(intValue)
                         .text(testStr)
 
@@ -24,7 +24,7 @@ class ControlPacketTest {
 
     @Test
     void getType() {
-        assertEquals(PacketType.Id, uut.getType());
+        assertEquals(PacketType.Wakeup, uut.getType());
     }
 
     @Test

@@ -1,5 +1,7 @@
 package com.mechnicality.audibleeventserver.service;
 
+import com.mechnicality.audibleeventserver.model.PacketType;
+import com.mechnicality.audibleeventserver.model.packet.ControlPacket;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,9 +19,11 @@ public class TaskRunner {
     private final QueueManager queueManager;
 
     private final UdpListenerService listenerService;
+    private final UdpSenderService udpSenderService;
 
-    public TaskRunner(QueueManager queueManager, UdpListenerService listenerService) {
+    public TaskRunner(QueueManager queueManager, UdpListenerService listenerService, UdpSenderService udpSenderService) {
         this.listenerService = listenerService;
+        this.udpSenderService = udpSenderService;
         this.queueManager = queueManager;
     }
 
@@ -31,6 +35,12 @@ public class TaskRunner {
         } catch (InterruptedException e) {
             throw new RuntimeException("Should never happen?");
         }
+        logger.info("Sending start command");
+        udpSenderService.sendPacket(ControlPacket.of(
+                b -> b
+                        .type(PacketType.Command)
+                        .text("start")
+        ));
         ExecutorService executorService = Executors.newFixedThreadPool(2);
         try {
             List<Future<String>> futures = executorService.invokeAll(List.of(queueManager,listenerService));

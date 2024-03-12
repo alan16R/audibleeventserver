@@ -8,7 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.function.Function;
 
 public class ControlPacket {
-    private  static int MAX_CONTROL_PACKET = 1530;
+    private  static final int MAX_CONTROL_PACKET = 1530;
     private final PacketType type;
     private final Short size;
     private final byte[] payload;
@@ -80,7 +80,6 @@ public class ControlPacket {
             this.size = Integer.valueOf(this.payload.position()).shortValue();
             this.payload.put(0,Integer.valueOf(packetType.ordinal()).byteValue());
             this.payload.putShort(2, size);
-            this.payload.limit(this.size);
             return new ControlPacket(this);
         }
     }

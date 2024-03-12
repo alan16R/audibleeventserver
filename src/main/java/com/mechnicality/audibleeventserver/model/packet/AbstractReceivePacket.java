@@ -6,16 +6,12 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Optional;
 
-public abstract class AbstractPacket<T> implements Packet<T> {
-
+public abstract class AbstractReceivePacket<T> implements ReceivePacket<T> {
     public static final int HEADER_BYTES = 12;
     public static final int COMMAND_OFFSET = 0;
     public static final int COUNT_OFFSET = 8;
-
     public static final int SEQUENCE_OFFSET = 4;
     public static final int COMMAND_MASK = 0xf;
-
-
 
     public static class PacketContext {
         PacketType packetType;
@@ -48,7 +44,7 @@ public abstract class AbstractPacket<T> implements Packet<T> {
 
     private final int size;
 
-    protected AbstractPacket(PacketType packetType, int sequence, int size){
+    protected AbstractReceivePacket(PacketType packetType, int sequence, int size){
         this.packetType = packetType;
         this.sequence = sequence;
         this.size = size;

@@ -23,7 +23,7 @@ public class TaskRunner {
         this.queueManager = queueManager;
     }
 
-    @PostConstruct
+//    @PostConstruct
     public void onStartup() {
         logger.info("Starting TaskRunner - 2 second delay");
         try {

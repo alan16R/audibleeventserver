@@ -18,7 +18,7 @@ import java.util.List;
 
 
 @Getter
-public class AudioPacket extends AbstractPacket<List<Short>> {
+public class AudioPacket extends AbstractReceivePacket<List<Short>> {
 
     private final List<Short> value;
     private final short max;

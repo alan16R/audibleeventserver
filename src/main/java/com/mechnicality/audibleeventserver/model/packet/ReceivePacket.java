@@ -2,7 +2,7 @@ package com.mechnicality.audibleeventserver.model.packet;
 
 import com.mechnicality.audibleeventserver.model.PacketType;
 
-public interface Packet<T> {
+public interface ReceivePacket<T> {
 
     /**
      * Low order bits are the PacketType
@@ -17,7 +17,7 @@ public interface Packet<T> {
     int getSize();
     /**
      * Number in logical sequence.
-     * Starts at 0 and ends well befoe
+     * Starts at 0 and ends well before
      * MAX_INT!
      */
     int getSequence();

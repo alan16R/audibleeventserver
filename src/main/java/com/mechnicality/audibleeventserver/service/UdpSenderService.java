@@ -1,7 +1,7 @@
 package com.mechnicality.audibleeventserver.service;
 
 import com.mechnicality.audibleeventserver.model.Info;
-import com.mechnicality.audibleeventserver.model.packet.Packet;
+import com.mechnicality.audibleeventserver.model.packet.ReceivePacket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,10 +27,10 @@ public class UdpSenderService {
         return null;
     }
 
-    public void sendPacket(Packet<?> packet) {
+    public void sendPacket(ReceivePacket<?> receivePacket) {
         try {
             InetAddress destination = InetAddress.getByName(remoteHost);
-            DatagramPacket datagramPacket = new DatagramPacket(packet.getBytes(), 0, packet.getBytes().length,
+            DatagramPacket datagramPacket = new DatagramPacket(receivePacket.getBytes(), 0, receivePacket.getBytes().length,
                     destination, remotePort);
         } catch (UnknownHostException e) {
             logger.error("Could not send datagram because {} is not recognized", remoteHost);

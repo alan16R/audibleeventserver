@@ -4,6 +4,8 @@ import com.mechnicality.audibleeventserver.model.PacketType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.HexFormat;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -40,7 +42,7 @@ class ControlPacketTest {
         assertEquals(13, found.length);
         String out = this.asHex(uut);
         System.out.println(out);
-        assertEquals("80d0aa55aa5548656c6c6f",out);
+        assertEquals("08000d00aa55aa5548656c6c6f",out);
 
     }
 
@@ -57,17 +59,36 @@ class ControlPacketTest {
         assertEquals((short)27, uut.getSize());
         String out = this.asHex(uut);
         System.out.println(out);
-        assertEquals(out,
-                "701b048656c6c6f2054686572651100426c616840e210"
+        assertEquals(
+                "07001b0048656c6c6f20546865726501010000426c616840e20100", out
         );
     }
 
-    private String asHex(ControlPacket cp) {
-        byte[] found = cp.getPayload();
-        String out = "";
-        for (byte b : found) {
-            out = out + String.format("%x",(byte)b);
-        }
-        return out;
+    @Test
+    void integerAtOf() {
+        uut = ControlPacket.of(b ->
+                b
+                        .type(PacketType.Error)
+                        .integerAt(4,1122)
+                        .integerAt(12,5566)
+                        .integerAt(8,3344)
+                );
+        assertEquals((short)16,uut.getSize());
+        assertEquals(PacketType.Error, uut.getType());
+        assertEquals(16, uut.getPayload().length);
+        String asHex = asHex(uut);
+        System.out.println(asHex);
+        assertEquals("0200100062040000100d0000be150000",asHex);
     }
+
+
+    private String asHex(ControlPacket cp) {
+        byte[] bytes = cp.getPayload();
+        StringBuilder str = new StringBuilder();
+        for (byte b : bytes) {
+            str.append(String.format("%02x", b));
+        }
+        return str.toString();
+    }
+
 }

@@ -4,17 +4,13 @@ import com.mechnicality.audibleeventserver.model.PacketType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigInteger;
-import java.util.Arrays;
-import java.util.HexFormat;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ControlPacketTest {
 
     private ControlPacket uut;
-    private int intValue = 0x55aa55aa;
-    private String testStr = "Hello";
+    private final int intValue = 0x55aa55aa;
+    private final String testStr = "Hello";
     @BeforeEach
     void setUp() {
         uut = ControlPacket.of(b ->
@@ -55,7 +51,7 @@ class ControlPacketTest {
                 .text("Blah") // 21 to 24
                 .integer(123456) //25-28
         );
-        short size = uut.getSize();
+
         assertEquals((short)27, uut.getSize());
         String out = this.asHex(uut);
         System.out.println(out);

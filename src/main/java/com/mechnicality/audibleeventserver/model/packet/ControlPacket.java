@@ -32,9 +32,7 @@ public class ControlPacket {
 
     public byte[] getPayload() {
         byte[] toReturn = new byte[size];
-        for (int i = 0; i< size; i++) {
-            toReturn[i] = payload[i];
-        }
+        System.arraycopy(payload, 0, toReturn, 0, size);
         return toReturn;
     }
 
